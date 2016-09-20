@@ -2,8 +2,8 @@ package io.github.tbk.postrics;
 
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.MetricSet;
 import com.google.common.collect.Maps;
-import io.github.tbk.postrics.postgres.PgMetricSet;
 import io.vertx.rxjava.core.AbstractVerticle;
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,12 +20,12 @@ class PostgresMetricVerticle extends AbstractVerticle {
     private final Map<String, Metric> metrics = Maps.newConcurrentMap();
 
     private final MetricRegistry registry;
-    private final PgMetricSet metricSet;
+    private final MetricSet metricSet;
     private final long period;
     private final TimeUnit timeUnit;
     private final long initialDelayInMs;
 
-    PostgresMetricVerticle(MetricRegistry registry, PgMetricSet metricSet, long period, TimeUnit timeUnit) {
+    PostgresMetricVerticle(MetricRegistry registry, MetricSet metricSet, long period, TimeUnit timeUnit) {
         requireNonNull(timeUnit);
         checkArgument(timeUnit.toMillis(period) >= MIN_PERIOD_IN_MS);
 

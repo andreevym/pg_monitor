@@ -7,8 +7,9 @@ import com.codahale.metrics.Slf4jReporter;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.github.tbk.postrics.metrics.Influxdb;
-import io.github.tbk.postrics.postgres.PgMetricSet;
-import io.github.tbk.postrics.postgres.PostgresDao;
+import io.github.tbk.postrics.postgres.PgDatabaseMetricSet;
+import io.github.tbk.postrics.postgres.PgGlobalMetricSet;
+import io.github.tbk.postrics.postgres.command.CommandExecutor;
 import io.vertx.core.Vertx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -39,8 +40,12 @@ class BeanConfiguration {
     }
 
     @Bean
-    public PostgresMetricVerticle postgresMetricVerticle() {
-        return new PostgresMetricVerticle(metricRegistry(), postgresMetricsSet(), 10, TimeUnit.SECONDS);
+    public PostgresMetricVerticle databaseMetricVerticle() {
+        return new PostgresMetricVerticle(metricRegistry(), databaseMetricsSet(), 10, TimeUnit.SECONDS);
+    }
+    @Bean
+    public PostgresMetricVerticle globalMetricsVerticle() {
+        return new PostgresMetricVerticle(metricRegistry(), globalMetricsSet(), 10, TimeUnit.SECONDS);
     }
 
     @Bean
@@ -81,8 +86,12 @@ class BeanConfiguration {
 
 
     @Bean
-    public PgMetricSet postgresMetricsSet() {
-        return new PgMetricSet("postgres", postgresDao());
+    public PgDatabaseMetricSet databaseMetricsSet() {
+        return new PgDatabaseMetricSet("postgres", commandExecutor());
+    }
+    @Bean
+    public PgGlobalMetricSet globalMetricsSet() {
+        return new PgGlobalMetricSet("postgres", commandExecutor());
     }
 
     @Bean
@@ -90,9 +99,10 @@ class BeanConfiguration {
         return SharedMetricRegistries.getOrCreate("registry");
     }
 
+
     @Bean
-    public PostgresDao postgresDao() {
-        return new PostgresDao(appConfig.databaseDbName(), dataSource());
+    public CommandExecutor commandExecutor() {
+        return new CommandExecutor(dataSource());
     }
 
     @Bean
