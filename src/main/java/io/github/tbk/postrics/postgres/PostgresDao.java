@@ -1,5 +1,6 @@
-package io.github.tbk.postgres.metrics.postgres;
+package io.github.tbk.postrics.postgres;
 
+import com.google.common.base.Throwables;
 import lombok.extern.slf4j.Slf4j;
 import rx.AsyncEmitter;
 import rx.Observable;
@@ -35,13 +36,20 @@ public class PostgresDao {
         }
     };
 
-    private DataSource dataSource;
+    private final String databaseName;
+    private final DataSource dataSource;
 
-    public PostgresDao(DataSource dataSource) {
+    public PostgresDao(String databaseName, DataSource dataSource) {
+        this.databaseName = databaseName;
         this.dataSource = requireNonNull(dataSource);
     }
 
-    public Observable<String> getDatabaseNames() {
+    public Observable<String> getDatabaseName() {
+        return getDatabaseNames()
+                .filter(name -> name.equals(this.databaseName));
+    }
+
+    private Observable<String> getDatabaseNames() {
         return Observable.fromEmitter(emitter -> {
             try (Connection conn = dataSource.getConnection()) {
                 conn.setAutoCommit(false);
@@ -85,7 +93,29 @@ public class PostgresDao {
         return getValue(sql, doubleFn);
     }
 
-    public Observable<PgTableStats> getTableStats(String schemaName, String tableName) {
-        return Observable.empty();
+    public Observable<?> getTableStats(String schemaName, String tableName) {
+        return Observable.fromCallable(() -> getValue("", rs -> {
+            try {
+                final PgTableStats.PgTableStatsBuilder builder = PgTableStats.builder()
+                        .analyze_count(rs.getLong("analyze_count"))
+                        .autoanalyze_count(0)
+                        .autovacuum_count(0)
+                        .idx_scan(0)
+                        .idx_tup_fetch(0)
+                        .last_analyze(0)
+                        .last_autoanalyze(0)
+                        .last_autovacuum(0)
+                        .last_vacuum(0)
+                        .n_dead_tup(0)
+                        .n_live_tup(0)
+                        .n_tup_hot_upd(0);
+
+                return Optional.of(builder.build());
+            } catch (SQLException e) {
+                throw Throwables.propagate(e);
+            }
+        }))
+                .map(o -> o.map(Observable::just))
+                .flatMap(o -> o.orElse(Observable.empty()));
     }
 }

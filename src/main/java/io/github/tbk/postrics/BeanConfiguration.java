@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ScheduledReporter;
@@ -6,7 +6,9 @@ import com.codahale.metrics.SharedMetricRegistries;
 import com.codahale.metrics.Slf4jReporter;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import io.github.tbk.postgres.metrics.postgres.PostgresDao;
+import io.github.tbk.postrics.metrics.Influxdb;
+import io.github.tbk.postrics.postgres.PgMetricSet;
+import io.github.tbk.postrics.postgres.PostgresDao;
 import io.vertx.core.Vertx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -38,12 +40,12 @@ class BeanConfiguration {
 
     @Bean
     public PostgresMetricVerticle postgresMetricVerticle() {
-        return new PostgresMetricVerticle(metricRegistry(), postgresMetricsSet());
+        return new PostgresMetricVerticle(metricRegistry(), postgresMetricsSet(), 10, TimeUnit.SECONDS);
     }
 
     @Bean
     public ScheduledReporterVerticle scheduledReporterVerticle() {
-        return new ScheduledReporterVerticle(influxdbReporter(), 10, TimeUnit.SECONDS);
+        return new ScheduledReporterVerticle(influxdbReporter(), 20, TimeUnit.SECONDS);
     }
 
     @Bean
@@ -79,8 +81,8 @@ class BeanConfiguration {
 
 
     @Bean
-    public DbMetricSet postgresMetricsSet() {
-        return new DbMetricSet("postgres", postgresDao());
+    public PgMetricSet postgresMetricsSet() {
+        return new PgMetricSet("postgres", postgresDao());
     }
 
     @Bean
@@ -90,7 +92,7 @@ class BeanConfiguration {
 
     @Bean
     public PostgresDao postgresDao() {
-        return new PostgresDao(dataSource());
+        return new PostgresDao(appConfig.databaseDbName(), dataSource());
     }
 
     @Bean
@@ -99,7 +101,7 @@ class BeanConfiguration {
         props.setProperty("dataSourceClassName", org.postgresql.ds.PGSimpleDataSource.class.getName());
         props.setProperty("dataSource.serverName", appConfig.databaseServerName());
         props.setProperty("dataSource.portNumber", String.valueOf(appConfig.databasePort()));
-        //props.setProperty("dataSource.databaseName", appConfig.databaseDbName());
+        props.setProperty("dataSource.databaseName", appConfig.databaseDbName());
         props.setProperty("dataSource.user", appConfig.databaseUser());
         props.setProperty("dataSource.password", appConfig.databasePassword());
 

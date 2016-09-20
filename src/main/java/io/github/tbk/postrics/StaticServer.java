@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics;
 
 import io.vertx.rxjava.core.AbstractVerticle;
 import io.vertx.rxjava.ext.web.Router;

@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics;
 
 import com.google.common.collect.ImmutableList;
 import io.vertx.core.Verticle;

@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics.metrics;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Strings;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-class Influxdb {
+public class Influxdb {
     private final String host;
     private final int port;
     private final String user;
@@ -21,7 +21,7 @@ class Influxdb {
     private final String database;
 
     @Builder
-    Influxdb(String host, int port, String user, String password, String database) {
+    public Influxdb(String host, int port, String user, String password, String database) {
         this.host = host;
         this.port = port;
         this.user = user;
@@ -29,12 +29,12 @@ class Influxdb {
         this.database = database;
     }
 
-    InfluxDB createClient() {
+    public InfluxDB createClient() {
         String url = "http://" + host + ":" + port;
         return InfluxDBFactory.connect(url, user, password);
     }
 
-    InfluxdbReporter.Builder createScheduledReporter(final String appName, final MetricRegistry registry) {
+    public InfluxdbReporter.Builder createScheduledReporter(final String appName, final MetricRegistry registry) {
         checkArgument(!Strings.isNullOrEmpty(appName), "influxdb reporter needs a valid application name to work properly");
 
         return InfluxdbReporter
@@ -44,7 +44,6 @@ class Influxdb {
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .filter(new EmptyMetricsFilter())
                 .transformer(new TaggingMeasurementTransformer(appName));
-
     }
 
     private InfluxdbProtocol influxdbProtocol() {

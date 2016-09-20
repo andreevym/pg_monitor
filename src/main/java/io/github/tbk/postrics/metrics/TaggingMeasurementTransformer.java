@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics.metrics;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;

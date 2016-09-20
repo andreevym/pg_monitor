@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics.postgres;
+package io.github.tbk.postrics.postgres;
 
 import lombok.Builder;
 import lombok.Value;

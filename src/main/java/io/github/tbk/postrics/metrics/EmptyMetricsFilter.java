@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics.metrics;
 
 import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Metric;

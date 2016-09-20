@@ -1,4 +1,4 @@
-package io.github.tbk.postgres.metrics;
+package io.github.tbk.postrics;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,7 @@ class AppConfiguration {
     }
 
     String databaseDbName() {
-        return environment.getProperty("db.name", "postgres");
+        return environment.getProperty("db.name", "test"/*"postgres"*/);
     }
 
     String databaseUser() {
@@ -61,7 +61,6 @@ class AppConfiguration {
     int metricsPort() {
         return environment.getProperty("metrics.port", Integer.class, 8086);
     }
-
 
 
 }
