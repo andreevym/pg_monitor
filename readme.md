@@ -1,6 +1,6 @@
-RxVertx SpringBoot
+Postrics
 ====
-
+A postgres metrics reporter and monitoring tool
 
 ### Package
 ```
@@ -14,5 +14,5 @@ RxVertx SpringBoot
 
 #### Docker
 ```
-> docker run -t -i -p 8080:8080 --link postgres:postgres --link influxdb:influxdb tbk/postgres-metrics
+> docker run -t -i -p 8080:8080 --link my-postgres-container:postgres --link my-influx-container:influxdb tbk/postgres-metrics
 ```
