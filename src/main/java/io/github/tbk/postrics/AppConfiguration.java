@@ -35,11 +35,13 @@ class AppConfiguration {
     }
 
     String databaseServerName() {
-        return environment.getProperty("db.serverName", "localhost");
+        return environment.getProperty("POSTGRES_PORT_5432_TCP_ADDR",
+                environment.getProperty("db.serverName", "0.0.0.0"));
     }
 
     int databasePort() {
-        return environment.getProperty("db.port", Integer.class, 5432);
+        return environment.getProperty("POSTGRES_PORT_5432_TCP_PORT", Integer.class,
+                environment.getProperty("db.port", Integer.class, 5432));
     }
 
     String metricsDatabaseName() {
@@ -55,11 +57,13 @@ class AppConfiguration {
     }
 
     String metricsServerName() {
-        return environment.getProperty("metrics.serverName", "localhost");
+        return environment.getProperty("INFLUXDB_PORT_8086_TCP_ADDR",
+                environment.getProperty("metrics.serverName", "0.0.0.0"));
     }
 
     int metricsPort() {
-        return environment.getProperty("metrics.port", Integer.class, 8086);
+        return environment.getProperty("INFLUXDB_PORT_8086_TCP_PORT", Integer.class,
+                environment.getProperty("metrics.port", Integer.class, 8086));
     }
 
 
