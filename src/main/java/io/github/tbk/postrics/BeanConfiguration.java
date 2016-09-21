@@ -43,6 +43,7 @@ class BeanConfiguration {
     public PostgresMetricVerticle databaseMetricVerticle() {
         return new PostgresMetricVerticle(metricRegistry(), databaseMetricsSet(), 10, TimeUnit.SECONDS);
     }
+
     @Bean
     public PostgresMetricVerticle globalMetricsVerticle() {
         return new PostgresMetricVerticle(metricRegistry(), globalMetricsSet(), 10, TimeUnit.SECONDS);
@@ -65,7 +66,7 @@ class BeanConfiguration {
                 .host(appConfig.metricsServerName())
                 .port(appConfig.metricsPort())
                 .user(appConfig.metricsUser())
-                .password(appConfig.databasePassword())
+                .password(appConfig.metricsPassword())
                 .build();
 
         build.createClient()
@@ -89,6 +90,7 @@ class BeanConfiguration {
     public PgDatabaseMetricSet databaseMetricsSet() {
         return new PgDatabaseMetricSet("postgres", commandExecutor());
     }
+
     @Bean
     public PgGlobalMetricSet globalMetricsSet() {
         return new PgGlobalMetricSet("postgres", commandExecutor());
