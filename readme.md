@@ -1,6 +1,21 @@
-Postrics
+pg_monitor
 ====
 A postgres metrics reporter and monitoring tool
+
+This information is available out of the box:
+- Cache hit rates
+- System activity
+- COMMITs and ROLLBACKs
+- Sequentual scans details
+- Index scan details
+- Lock statistics
+
+TODO:
+- Optimizer information
+- Open database connections
+- Disk I/O
+- Checkpointing behavior
+
 
 ### Package
 ```
