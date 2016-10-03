@@ -1,0 +1,17 @@
+{
+  "name": "export-grafana-dashboards",
+  "version": "0.0.1",
+  "description": "Exports grafana dashboards",
+  "main": "index.js",
+  "scripts": {
+    "default": "node index.js --host=127.0.0.1 --port=3000 --user=admin --password=admin",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "export",
+    "grafana",
+    "dashboard"
+  ],
+  "author": "Thebora Kompanioni <theborakompanioni+github@gmail.com> (https://theborakompanioni.github.io)",
+  "license": "MIT"
+}
