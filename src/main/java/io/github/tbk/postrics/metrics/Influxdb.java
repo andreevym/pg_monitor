@@ -2,6 +2,7 @@ package io.github.tbk.postrics.metrics;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableMap;
 import lombok.Builder;
 import metrics_influxdb.InfluxdbReporter;
 import metrics_influxdb.api.protocols.InfluxdbProtocol;
@@ -37,13 +38,15 @@ public class Influxdb {
     public InfluxdbReporter.Builder createScheduledReporter(final String appName, final MetricRegistry registry) {
         checkArgument(!Strings.isNullOrEmpty(appName), "influxdb reporter needs a valid application name to work properly");
 
+        final ImmutableMap<String, String> tags = ImmutableMap.<String, String>builder().put("app", appName).build();
+
         return InfluxdbReporter
                 .forRegistry(registry)
                 .protocol(influxdbProtocol())
                 .convertRatesTo(TimeUnit.SECONDS)
                 .convertDurationsTo(TimeUnit.MILLISECONDS)
                 .filter(new EmptyMetricsFilter())
-                .transformer(new TaggingMeasurementTransformer(appName));
+                .transformer(new TaggingMeasurementTransformer(metricName -> tags));
     }
 
     private InfluxdbProtocol influxdbProtocol() {

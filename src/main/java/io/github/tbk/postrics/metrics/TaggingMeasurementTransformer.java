@@ -5,23 +5,23 @@ import com.google.common.collect.ImmutableMap;
 import metrics_influxdb.api.measurements.MetricMeasurementTransformer;
 
 import java.util.Map;
+import java.util.function.Function;
 
 class TaggingMeasurementTransformer implements MetricMeasurementTransformer {
-    private final String appName;
-
     private final Splitter.MapSplitter tagSplitter = Splitter.on(',')
             .omitEmptyStrings()
             .trimResults()
             .withKeyValueSeparator('=');
+    private Function<String, Map<String, String>> tagsSupplier;
 
-    TaggingMeasurementTransformer(String appName) {
-        this.appName = appName;
+    TaggingMeasurementTransformer(Function<String, Map<String, String>> staticTagsSupplier) {
+        this.tagsSupplier = staticTagsSupplier;
     }
 
     @Override
     public Map<String, String> tags(final String metricName) {
-        ImmutableMap.Builder<String, String> builder = ImmutableMap.builder();
-        builder.put("app", appName);
+        ImmutableMap.Builder<String, String> builder = ImmutableMap.<String, String>builder()
+                .putAll(tagsSupplier.apply(metricName));
 
         int commaPos = metricName.indexOf(',');
         if (commaPos > 0) {
