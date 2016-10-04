@@ -7,7 +7,6 @@ import com.codahale.metrics.Slf4jReporter;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import io.github.tbk.postrics.metrics.Influxdb;
-import io.github.tbk.postrics.postgres.PgDatabaseMetricSet;
 import io.github.tbk.postrics.postgres.PgGlobalMetricSet;
 import io.github.tbk.postrics.postgres.command.CommandExecutor;
 import io.vertx.core.Vertx;
@@ -40,13 +39,8 @@ class BeanConfiguration {
     }
 
     @Bean
-    public PostgresMetricVerticle databaseMetricVerticle() {
-        return new PostgresMetricVerticle(metricRegistry(), databaseMetricsSet(), 10, TimeUnit.SECONDS);
-    }
-
-    @Bean
     public PostgresMetricVerticle globalMetricsVerticle() {
-        return new PostgresMetricVerticle(metricRegistry(), globalMetricsSet(), 10, TimeUnit.SECONDS);
+        return new PostgresMetricVerticle(metricRegistry(), globalMetricsSet(), 60, TimeUnit.SECONDS);
     }
 
     @Bean
@@ -83,12 +77,6 @@ class BeanConfiguration {
     @Bean
     public ScheduledReporter slf4jReporter() {
         return Slf4jReporter.forRegistry(metricRegistry()).build();
-    }
-
-
-    @Bean
-    public PgDatabaseMetricSet databaseMetricsSet() {
-        return new PgDatabaseMetricSet("postgres", commandExecutor());
     }
 
     @Bean

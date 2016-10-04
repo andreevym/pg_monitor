@@ -6,9 +6,12 @@ import com.codahale.metrics.MetricSet;
 import com.google.common.collect.ImmutableMap;
 import io.github.tbk.postrics.postgres.command.Command;
 import io.github.tbk.postrics.postgres.command.CommandExecutor;
+import io.github.tbk.postrics.postgres.command.Commands;
+import io.github.tbk.postrics.postgres.command.Commands.PgVersion;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
+import java.util.function.Function;
 
 import static com.codahale.metrics.MetricRegistry.name;
 
@@ -27,16 +30,14 @@ public class PgGlobalMetricSet implements MetricSet {
     public Map<String, Metric> getMetrics() {
         ImmutableMap.Builder<String, Metric> registeredMetrics = ImmutableMap.builder();
 
-        registeredMetrics.put(name(prefix, "database", "processes"), asGauge(Commands.SELECT_GLOBAL_PROCESS_COUNT));
-        registeredMetrics.put(name(prefix, "database", "processes") + ",state=active", asGauge(Commands.SELECT_GLOBAL_ACTIVE_PROCESS_COUNT));
-        registeredMetrics.put(name(prefix, "database", "processes") + ",state=idle", asGauge(Commands.SELECT_GLOBAL_IDLE_PROCESS_COUNT));
+        //registeredMetrics.put(name(prefix, "version"), asGauge(Commands.SHOW_VERSION, PgVersion::getNumeric));
 
-        registeredMetrics.put(name(prefix, "database", "size"), asGauge(Commands.SELECT_GLOBAL_SIZE));
         return registeredMetrics.build();
     }
 
-
-    private <T> Gauge<T> asGauge(Command<T> command) {
-        return () -> commandExecutor.execute(command).toBlocking().single();
+    private <T, K> Gauge<T> asGauge(Command<K> command, Function<K, T> mapper) {
+        return () -> commandExecutor.execute(command)
+                .map(mapper::apply)
+                .toBlocking().single();
     }
 }
