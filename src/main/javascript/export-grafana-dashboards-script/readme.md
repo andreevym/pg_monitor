@@ -1,6 +1,14 @@
 export_grafana_dashboards
 ===
 
+# Setup
+
+```
+$ npm install
+```
+
+# Run
+
 ```
 $ npm run default
 ```
@@ -15,3 +23,9 @@ Exporting grafana
 The file ./export/grafana.json was saved!
 ```
 
+or
+
+
+```
+$ node index.js --host=grafana.example.com --port=3000 --user=admin --password=admin
+```
