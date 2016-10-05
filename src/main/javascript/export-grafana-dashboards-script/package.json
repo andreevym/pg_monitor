@@ -13,5 +13,8 @@
     "dashboard"
   ],
   "author": "Thebora Kompanioni <theborakompanioni+github@gmail.com> (https://theborakompanioni.github.io)",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
 }
