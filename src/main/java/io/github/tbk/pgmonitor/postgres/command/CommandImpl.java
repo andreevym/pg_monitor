@@ -1,4 +1,4 @@
-package io.github.tbk.postrics.postgres.command;
+package io.github.tbk.pgmonitor.postgres.command;
 
 public class CommandImpl<K> implements Command<K> {
     public static <K> CommandImplBuilder<K> builder() {
@@ -45,7 +45,7 @@ public class CommandImpl<K> implements Command<K> {
         }
 
         public String toString() {
-            return "io.github.tbk.postrics.postgres.command.CommandImpl.CommandImplBuilder(sql=" + this.sql + ", mapper=" + this.mapper + ")";
+            return "io.github.tbk.pgmonitor.postgres.command.CommandImpl.CommandImplBuilder(sql=" + this.sql + ", mapper=" + this.mapper + ")";
         }
     }
 }

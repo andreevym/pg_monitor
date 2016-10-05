@@ -1,4 +1,4 @@
-package io.github.tbk.postrics.postgres.command;
+package io.github.tbk.pgmonitor.postgres.command;
 
 public interface Command<T> {
     String sql();

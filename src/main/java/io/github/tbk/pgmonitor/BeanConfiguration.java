@@ -1,4 +1,4 @@
-package io.github.tbk.postrics;
+package io.github.tbk.pgmonitor;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ScheduledReporter;
@@ -6,9 +6,9 @@ import com.codahale.metrics.SharedMetricRegistries;
 import com.codahale.metrics.Slf4jReporter;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import io.github.tbk.postrics.metrics.Influxdb;
-import io.github.tbk.postrics.postgres.PgGlobalMetricSet;
-import io.github.tbk.postrics.postgres.command.CommandExecutor;
+import io.github.tbk.pgmonitor.metrics.Influxdb;
+import io.github.tbk.pgmonitor.postgres.PgGlobalMetricSet;
+import io.github.tbk.pgmonitor.postgres.command.CommandExecutor;
 import io.vertx.core.Vertx;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

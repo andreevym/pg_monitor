@@ -1,4 +1,4 @@
-package io.github.tbk.postrics.postgres.command;
+package io.github.tbk.pgmonitor.postgres.command;
 
 import lombok.extern.slf4j.Slf4j;
 import rx.AsyncEmitter;

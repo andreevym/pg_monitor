@@ -1,4 +1,4 @@
-package io.github.tbk.postrics;
+package io.github.tbk.pgmonitor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

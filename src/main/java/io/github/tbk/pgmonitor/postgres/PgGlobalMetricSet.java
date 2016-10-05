@@ -1,13 +1,11 @@
-package io.github.tbk.postrics.postgres;
+package io.github.tbk.pgmonitor.postgres;
 
 import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricSet;
 import com.google.common.collect.ImmutableMap;
-import io.github.tbk.postrics.postgres.command.Command;
-import io.github.tbk.postrics.postgres.command.CommandExecutor;
-import io.github.tbk.postrics.postgres.command.Commands;
-import io.github.tbk.postrics.postgres.command.Commands.PgVersion;
+import io.github.tbk.pgmonitor.postgres.command.Command;
+import io.github.tbk.pgmonitor.postgres.command.CommandExecutor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
