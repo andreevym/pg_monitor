@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/theborakompanioni/pg_monitor.svg?branch=master)](https://travis-ci.org/theborakompanioni/pg_monitor)
+
+
 pg_monitor
 ====
 A postgres metrics reporter and monitoring tool
