@@ -22,7 +22,6 @@ pgmonitor.database:
   port: "5432"
 
 pgmonitor.metrics:
-  enabled: true
   console: true
   interval-in-seconds: 10
 

@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(DropwizardMetricsProperties.class)
-@ConditionalOnProperty(value = "pgmonitor.metrics.enabled", matchIfMissing = true)
 public class DropwizardMetricsConfig {
     private final static long MIN_IN_SECONDS = 1;
 

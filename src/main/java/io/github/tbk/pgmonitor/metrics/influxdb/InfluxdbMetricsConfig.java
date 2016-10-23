@@ -1,12 +1,11 @@
 package io.github.tbk.pgmonitor.metrics.influxdb;
 
 import com.codahale.metrics.MetricRegistry;
-import com.codahale.metrics.ScheduledReporter;
 import io.github.tbk.pgmonitor.AppConfiguration;
 import io.github.tbk.pgmonitor.ScheduledReporterVerticle;
 import lombok.extern.slf4j.Slf4j;
+import metrics_influxdb.measurements.MeasurementReporter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -14,15 +13,17 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.concurrent.TimeUnit;
 
+import static java.util.Objects.requireNonNull;
+
 @Slf4j
 @Configuration
-@ConditionalOnBean(MetricRegistry.class)
-@ConditionalOnProperty("pgmonitor.influxdb.enabled")
 @EnableConfigurationProperties(InfluxdbProperties.class)
+@ConditionalOnProperty("pgmonitor.influxdb.enabled")
 public class InfluxdbMetricsConfig {
 
     @Autowired
     private InfluxdbProperties properties;
+
 
     private final AppConfiguration appConfig;
     private final MetricRegistry metricRegistry;
@@ -49,10 +50,11 @@ public class InfluxdbMetricsConfig {
     }
 
     @Bean
-    public ScheduledReporter influxdbReporter() {
-        log.info("prepare influxdb reporter: {}@{}:{}/{}", properties.getUsername(), properties.getHost(),
+    public MeasurementReporter influxdbReporter() {
+        log.info("setup influxdb reporter: {}@{}:{}/{}", properties.getUsername(), properties.getHost(),
                 properties.getPort(), properties.getDatabase());
-        return influxdb().createScheduledReporter(appConfig.appName(), metricRegistry).build();
+
+        return (MeasurementReporter) influxdb().createScheduledReporter(appConfig.appName(), metricRegistry).build();
     }
 
 

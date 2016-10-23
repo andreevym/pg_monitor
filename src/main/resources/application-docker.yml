@@ -11,7 +11,6 @@ pgmonitor.database:
   #port: "5432"
 
 pgmonitor.metrics:
-  enabled: true
   console: true
   interval-in-seconds: 10
 
@@ -22,7 +21,7 @@ pgmonitor.influxdb:
   password: "root"
   skip-idle-metrics: true
   interval-in-seconds: 60
-  host: ${INFLUXDB_1_PORT_8086_TCP_ADDR}
-  port: ${INFLUXDB_1_PORT_8086_TCP_PORT}
+  host: ${INFLUXDB_PORT_8086_TCP_ADDR}
+  port: ${INFLUXDB_PORT_8086_TCP_PORT}
   #host: "0.0.0.0"
   #port: "8086"

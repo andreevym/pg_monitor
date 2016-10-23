@@ -22,9 +22,8 @@ pgmonitor.database:
   port: "5432"
 
 pgmonitor.metrics:
-  enabled: true
   console: true
-  intervalInSeconds: 30
+  interval-in-seconds: 30
 
 pgmonitor.influxdb:
   enabled: true
