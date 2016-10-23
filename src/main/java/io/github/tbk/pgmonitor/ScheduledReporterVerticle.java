@@ -10,7 +10,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Objects.requireNonNull;
 
 @Slf4j
-class ScheduledReporterVerticle extends AbstractVerticle {
+public class ScheduledReporterVerticle extends AbstractVerticle {
     private final static long MIN_PERIOD_IN_MS = 1_000;
 
     private final ScheduledReporter scheduledReporter;
@@ -18,7 +18,7 @@ class ScheduledReporterVerticle extends AbstractVerticle {
     private final TimeUnit timeUnit;
     private final long initialDelayInMs;
 
-    ScheduledReporterVerticle(ScheduledReporter scheduledReporter, long period, TimeUnit timeUnit) {
+    public ScheduledReporterVerticle(ScheduledReporter scheduledReporter, long period, TimeUnit timeUnit) {
         requireNonNull(timeUnit);
         checkArgument(timeUnit.toMillis(period) >= MIN_PERIOD_IN_MS);
 

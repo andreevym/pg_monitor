@@ -1,6 +1,7 @@
 package io.github.tbk.pgmonitor.metrics;
 
 import com.codahale.metrics.Gauge;
+import io.github.tbk.pgmonitor.metrics.influxdb.EmptyMetricsFilter;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package io.github.tbk.pgmonitor.metrics;
+package io.github.tbk.pgmonitor.metrics.influxdb;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;

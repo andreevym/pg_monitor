@@ -1,0 +1,28 @@
+spring.profiles.active: docker
+
+
+pgmonitor.database:
+  db: "postgres"
+  user: "postgres"
+  password: "postgres"
+  host: ${POSTGRES_PORT_5432_TCP_ADDR}
+  port: ${POSTGRES_PORT_5432_TCP_PORT}
+  #host: "0.0.0.0"
+  #port: "5432"
+
+pgmonitor.metrics:
+  enabled: true
+  console: true
+  interval-in-seconds: 10
+
+pgmonitor.influxdb:
+  enabled: true
+  database: "db"
+  username: "root"
+  password: "root"
+  skip-idle-metrics: true
+  interval-in-seconds: 60
+  host: ${INFLUXDB_1_PORT_8086_TCP_ADDR}
+  port: ${INFLUXDB_1_PORT_8086_TCP_PORT}
+  #host: "0.0.0.0"
+  #port: "8086"

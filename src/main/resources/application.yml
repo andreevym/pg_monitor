@@ -1,0 +1,37 @@
+spring.profiles.active: production
+
+app.name: pgmonitor
+app.description: a simple postgres monitoring solution
+
+server.use-forward-headers: true
+server.compression.enabled: true
+
+management.context-path: /actuator
+
+# LOGGING
+logging.path: ./var/log
+logging.file: application.log
+logging.config: classpath:logback.xml
+logging.level.org.springframework: INFO
+
+pgmonitor.database:
+  db: "postgres"
+  user: "postgres"
+  password: "postgres"
+  host: "0.0.0.0"
+  port: "5432"
+
+pgmonitor.metrics:
+  enabled: true
+  console: true
+  intervalInSeconds: 30
+
+pgmonitor.influxdb:
+  enabled: false
+  host: "0.0.0.0"
+  port: "8086"
+  database: "db"
+  username: "root"
+  password: "root"
+  skip-idle-metrics: true
+  interval-in-seconds: 60

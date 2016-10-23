@@ -1,4 +1,4 @@
-package io.github.tbk.pgmonitor.metrics;
+package io.github.tbk.pgmonitor.metrics.influxdb;
 
 import com.codahale.metrics.MetricRegistry;
 import com.google.common.base.Strings;

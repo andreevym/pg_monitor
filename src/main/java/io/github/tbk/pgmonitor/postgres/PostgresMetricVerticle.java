@@ -1,4 +1,4 @@
-package io.github.tbk.pgmonitor;
+package io.github.tbk.pgmonitor.postgres;
 
 import com.codahale.metrics.Metric;
 import com.codahale.metrics.MetricRegistry;
