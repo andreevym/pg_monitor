@@ -27,10 +27,10 @@ pgmonitor.metrics:
   intervalInSeconds: 30
 
 pgmonitor.influxdb:
-  enabled: false
+  enabled: true
   host: "0.0.0.0"
   port: "8086"
-  database: "db"
+  database: "db_prod"
   username: "root"
   password: "root"
   skip-idle-metrics: true

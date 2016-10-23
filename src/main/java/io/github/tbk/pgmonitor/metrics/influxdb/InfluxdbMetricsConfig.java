@@ -50,7 +50,8 @@ public class InfluxdbMetricsConfig {
 
     @Bean
     public ScheduledReporter influxdbReporter() {
-        log.info("prepare influxdb reporter: {}:{}", properties.getHost(), properties.getPort());
+        log.info("prepare influxdb reporter: {}@{}:{}/{}", properties.getUsername(), properties.getHost(),
+                properties.getPort(), properties.getDatabase());
         return influxdb().createScheduledReporter(appConfig.appName(), metricRegistry).build();
     }
 

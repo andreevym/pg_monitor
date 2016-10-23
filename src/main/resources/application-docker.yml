@@ -17,7 +17,7 @@ pgmonitor.metrics:
 
 pgmonitor.influxdb:
   enabled: true
-  database: "db"
+  database: "db_docker"
   username: "root"
   password: "root"
   skip-idle-metrics: true
